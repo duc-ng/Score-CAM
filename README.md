@@ -1,8 +1,11 @@
-## Score-CAM
+## XAI: Score-CAM
 
-This repository implements the Score-CAM (Score-Weighted Visual Explanations for Convolutional Neural Networks)visual explanation method for CNNs.
+This project implements Score-CAM, a visual explanation method for convolutional neural networks.
 
 Paper: [Score-CAM: Score-Weighted Visual Explanations for Convolutional Neural Networks](http://openaccess.thecvf.com/content_CVPRW_2020/papers/w1/Wang_Score-CAM_Score-Weighted_Visual_Explanations_for_Convolutional_Neural_Networks_CVPRW_2020_paper.pdf)
+
+
+<img src="more/index.png" width="100%" height="100%">
 
 ## Prerequisites
 Development
@@ -10,7 +13,7 @@ Development
 - Pytorch
 - Numpy
 - Matplotlib
-- ..
+- other ML libraries
 
 Score-CAM
 - Trained neural network model with at least one 2D convolutional layer
@@ -33,8 +36,8 @@ Results can be found in ./results .
 | Arg        | Name           | Description  |
 | ------------- |:-------------:| -----:|
 | -m    | Model | Trained pytorch model with at least one 2Dconv layer|
-| -i     | Image folder      |   folder with .jpegs/.pngs/..  |
+| -i     | Image folder      |   folder with images for prediction (.jpegs, .pngs, ..)  |
 
 ## Credits
-The code is forked from the original [Score-CAM Repo](https://github.com/haofanwang/Score-CAM).
+This code is forked from the original [Score-CAM repo](https://github.com/haofanwang/Score-CAM).
 
