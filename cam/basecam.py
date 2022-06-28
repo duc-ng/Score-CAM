@@ -3,8 +3,7 @@ Part of code borrows from https://github.com/1Konny/gradcam_plus_plus-pytorch
 '''
 
 import torch
-from utils import find_alexnet_layer, find_vgg_layer, find_resnet_layer, find_densenet_layer, \
-    find_squeezenet_layer, find_layer, find_googlenet_layer, find_mobilenet_layer, find_shufflenet_layer
+from utils import find_last_con2d_layer
 
 class BaseCAM(object):
     """ Base class for Class activation mapping.
@@ -16,8 +15,6 @@ class BaseCAM(object):
     """
 
     def __init__(self, model_dict):
-        model_type = model_dict['type']
-        layer_name = model_dict['layer_name']
         
         self.model_arch = model_dict['arch']
         self.model_arch.eval()
@@ -40,24 +37,8 @@ class BaseCAM(object):
               self.activations['value'] = output
             return None
 
-        if 'vgg' in model_type.lower():
-            self.target_layer = find_vgg_layer(self.model_arch, layer_name)
-        elif 'resnet' in model_type.lower():
-            self.target_layer = find_resnet_layer(self.model_arch, layer_name)
-        elif 'densenet' in model_type.lower():
-            self.target_layer = find_densenet_layer(self.model_arch, layer_name)
-        elif 'alexnet' in model_type.lower():
-            self.target_layer = find_alexnet_layer(self.model_arch, layer_name)
-        elif 'squeezenet' in model_type.lower():
-            self.target_layer = find_squeezenet_layer(self.model_arch, layer_name)
-        elif 'googlenet' in model_type.lower():
-            self.target_layer = find_googlenet_layer(self.model_arch, layer_name)
-        elif 'shufflenet' in model_type.lower():
-            self.target_layer = find_shufflenet_layer(self.model_arch, layer_name)
-        elif 'mobilenet' in model_type.lower():
-            self.target_layer = find_mobilenet_layer(self.model_arch, layer_name)
-        else:
-            self.target_layer = find_layer(self.model_arch, layer_name)
+        
+        self.target_layer = find_last_con2d_layer(self.model_arch)
 
         self.target_layer.register_forward_hook(forward_hook)
         self.target_layer.register_backward_hook(backward_hook)

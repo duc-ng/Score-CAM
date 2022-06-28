@@ -26,7 +26,7 @@ class ScoreCAM(BaseCAM):
             predicted_class = torch.LongTensor([class_idx])
             score = logit[:, class_idx].squeeze()
         
-        logit = F.softmax(logit)
+        logit = F.softmax(logit, dim=1)
 
         if torch.cuda.is_available():
           predicted_class= predicted_class.cuda()
@@ -60,7 +60,7 @@ class ScoreCAM(BaseCAM):
               # how much increase if keeping the highlighted region
               # predication on masked input
               output = self.model_arch(input * norm_saliency_map)
-              output = F.softmax(output)
+              output = F.softmax(output, dim=1)
               score = output[0][predicted_class]
 
               score_saliency_map +=  score * saliency_map

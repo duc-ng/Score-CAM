@@ -7,10 +7,10 @@ transformation.
 """
 from PIL import Image
 import matplotlib.pyplot as plt
-
+import numpy as np
 import torchvision.transforms as transforms
 import torchvision.transforms.functional as F
-
+from torch import nn
 from .imagenet import *
 
 
@@ -634,4 +634,22 @@ def find_layer(arch, target_layer_name):
     if target_layer_name.split('_') not in arch._modules.keys():
         raise Exception("Invalid target layer name.")
     target_layer = arch._modules[target_layer_name]
+    return target_layer
+
+def find_last_con2d_layer(arch):
+    """Find last 2dconv layer to calculate Score-CAM.
+
+        : Args:
+            - **arch - **: Self-defined architecture.
+
+        : Return:
+            - **target_layer - **: Found layer. This layer will be hooked to get forward/backward pass information.
+    """
+
+    layers = [module for _, module in arch.named_modules() if isinstance(module, nn.Conv2d)]
+
+    if len(layers)==0:
+        raise Exception("Error: No convolutional layers (2D) found!")
+
+    target_layer = layers[-1]
     return target_layer

@@ -50,16 +50,13 @@ for image in images:
   if torch.cuda.is_available():
     input_ = input_.cuda()
 
-  # save numpy heatmap
-  model_scorecam = ScoreCAM(dict(type='vgg16', arch=model, layer_name='features_29',input_size=input_image.size))
+  # save heatmap
+  model_scorecam = ScoreCAM(dict(arch=model, input_size=input_image.size))
   heatmap = model_scorecam(input_)
-  # np_heatmap = format_for_plotting(standardize_and_clip(heatmap)).numpy()
-  stem = pathlib.Path(image).stem
-  path_heatmap = join(path_results, "heatmap_"+stem)
-  
+  path_heatmap = join(path_results, "heatmap_"+pathlib.Path(image).stem)
   with torch.no_grad():
     save_output(input_.cpu(), heatmap.type(torch.FloatTensor).cpu(),save_path=path_heatmap)
 
 
-
+print("Heatmaps can be found in ./results")
 print("FINISH")
