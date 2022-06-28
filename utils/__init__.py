@@ -13,6 +13,44 @@ import torchvision.transforms.functional as F
 
 from .imagenet import *
 
+
+def save_output(input_, gradients, save_path=None, weight=None, cmap='viridis', alpha=0.7):
+    
+    """ Method to plot the explanation.
+
+        # Arguments
+            input_: Tensor. Original image.
+            gradients: Tensor. Saliency map result.
+            save_path: String. Defaults to None.
+            cmap: Defaults to be 'viridis'.
+            alpha: Defaults to be 0.7.
+
+    """
+    input_ = format_for_plotting(denormalize(input_))
+    gradients = format_for_plotting(standardize_and_clip(gradients))
+
+    subplots = [
+        ('Saliency map across RGB channels', [(gradients, None, None)]),
+        ('Overlay', [(input_, None, None), (gradients, cmap, alpha)])
+    ]
+
+    with open(save_path+".npy", 'wb') as f:
+      np.save(f, gradients)
+
+    num_subplots = len(subplots)
+
+    fig = plt.figure(figsize=(4, 4))
+
+    for i, (title, images) in enumerate(subplots):
+        ax = fig.add_subplot(1, num_subplots, i + 1)
+        ax.set_axis_off()
+
+        for image, cmap, alpha in images:
+            ax.imshow(image, cmap=cmap, alpha=alpha)
+
+    if save_path is not None:
+        plt.savefig(save_path)
+
 def load_image(image_path):
     """Loads image as a PIL RGB image.
 
