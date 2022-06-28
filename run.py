@@ -12,6 +12,9 @@ from glob import glob
 from os.path import join
 from utils import load_image, apply_transforms, basic_visualize, visualize, save_output
 from cam.scorecam import ScoreCAM
+import warnings
+
+warnings.filterwarnings("ignore")
 
 
 # load paths from cmdline args

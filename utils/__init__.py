@@ -30,7 +30,7 @@ def save_output(input_, gradients, save_path=None, weight=None, cmap='viridis', 
     gradients = format_for_plotting(standardize_and_clip(gradients))
 
     subplots = [
-        ('Saliency map across RGB channels', [(gradients, None, None)]),
+        ('Input', [(input_, None, None)]),
         ('Overlay', [(input_, None, None), (gradients, cmap, alpha)])
     ]
 
@@ -39,7 +39,7 @@ def save_output(input_, gradients, save_path=None, weight=None, cmap='viridis', 
 
     num_subplots = len(subplots)
 
-    fig = plt.figure(figsize=(4, 4))
+    fig = plt.figure(figsize=(8, 4))
 
     for i, (title, images) in enumerate(subplots):
         ax = fig.add_subplot(1, num_subplots, i + 1)
