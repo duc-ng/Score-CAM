@@ -6,6 +6,8 @@ import torchvision.models as models
 
 from utils import *
 from cam.scorecam import *
+asdasd
+
 
 # alexnet
 alexnet = models.alexnet(pretrained=True).eval()
