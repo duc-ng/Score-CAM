@@ -34,8 +34,8 @@ def save_output(input_, gradients, save_path=None, weight=None, cmap='viridis', 
         ('Overlay', [(input_, None, None), (gradients, cmap, alpha)])
     ]
 
-    with open(save_path+".npy", 'wb') as f:
-      np.save(f, gradients)
+    # with open(save_path+".npy", 'wb') as f:
+    #   np.save(f, gradients)
 
     num_subplots = len(subplots)
 
