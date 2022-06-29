@@ -27,13 +27,13 @@ Run an example on [Google Colab](https://colab.research.google.com/drive/1Ar32WD
 ```bash
 git clone https://github.com/duc-ng/Score-CAM
 cd Score-CAM
-python run.py -m model.pt -i images
+python run.py -m model.pt -i ./images
 ```
 
 Results can be found in ./results .
 
-# Args
-| Arg        | Name           | Description  |
+## Args
+| Argument        | Name           | Description  |
 | ------------- |:-------------:| -----:|
 | -m    | Model | Trained pytorch model with at least one 2Dconv layer|
 | -i     | Image folder      |   folder with images for prediction (.jpegs, .pngs, ..)  |
