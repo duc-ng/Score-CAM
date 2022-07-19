@@ -58,7 +58,8 @@ for image in images:
   heatmap = model_scorecam(input_)
   path_heatmap = join(path_results, "heatmap_"+pathlib.Path(image).stem)
   with torch.no_grad():
-    save_output(input_.cpu(), heatmap.type(torch.FloatTensor).cpu(),save_path=path_heatmap)
+    if heatmap is not None:
+      save_output(input_.cpu(), heatmap.type(torch.FloatTensor).cpu(),save_path=path_heatmap)
 
 
 print("Heatmaps can be found in ./results")
