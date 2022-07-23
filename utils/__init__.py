@@ -12,7 +12,7 @@ import torchvision.transforms as transforms
 import torchvision.transforms.functional as F
 from torch import nn
 from .imagenet import *
-
+from functools import reduce
 
 def save_output(input_, gradients, save_path=None, weight=None, cmap='viridis', alpha=0.7):
     
@@ -63,6 +63,24 @@ def load_image(image_path):
     """
 
     return Image.open(image_path).convert('RGB')
+
+def apply_transforms_score(image, means, stds, size):
+    if not isinstance(image, Image.Image):
+        image = F.to_pil_image(image)
+
+    transform = transforms.Compose([
+        transforms.Resize(size),
+        transforms.CenterCrop(size),
+        transforms.ToTensor(),
+        transforms.Normalize(means, stds)
+    ])
+
+    tensor = transform(image).unsqueeze(0)
+
+    tensor.requires_grad = True
+
+    return tensor
+
 
 
 def apply_transforms(image, size=224):
@@ -653,3 +671,20 @@ def find_last_con2d_layer(arch):
 
     target_layer = layers[-1]
     return target_layer
+
+def find_specific_layer(arch,target_layer_name):
+    """Find specific layer to calculate Score-CAM.
+
+        : Args:
+            - **arch - **: Self-defined architecture.
+
+        : Return:
+            - **target_layer - **: Found layer. This layer will be hooked to get forward/backward pass information.
+    """
+    names = target_layer_name.split(sep='.')
+    layer = reduce(getattr, names, arch)
+    print("Target layer: ", layer)
+    return layer
+
+
+  

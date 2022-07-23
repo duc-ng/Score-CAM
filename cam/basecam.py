@@ -3,7 +3,7 @@ Part of code borrows from https://github.com/1Konny/gradcam_plus_plus-pytorch
 '''
 
 import torch
-from utils import find_last_con2d_layer
+from utils import find_specific_layer
 
 class BaseCAM(object):
     """ Base class for Class activation mapping.
@@ -17,6 +17,7 @@ class BaseCAM(object):
     def __init__(self, model_dict):
         
         self.model_arch = model_dict['arch']
+        self.layer_name = model_dict['layer_name']
         self.model_arch.eval()
         if torch.cuda.is_available():
           self.model_arch.cuda()
@@ -38,10 +39,10 @@ class BaseCAM(object):
             return None
 
         
-        self.target_layer = find_last_con2d_layer(self.model_arch)
+        self.target_layer = find_specific_layer(self.model_arch, self.layer_name)
 
         self.target_layer.register_forward_hook(forward_hook)
-        self.target_layer.register_backward_hook(backward_hook)
+        self.target_layer.register_full_backward_hook(backward_hook)
 
     def forward(self, input, class_idx=None, retain_graph=False):
         return None
