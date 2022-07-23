@@ -42,7 +42,7 @@ class BaseCAM(object):
         self.target_layer = find_specific_layer(self.model_arch, self.layer_name)
 
         self.target_layer.register_forward_hook(forward_hook)
-        self.target_layer.register_full_backward_hook(backward_hook)
+        self.target_layer.register_backward_hook(backward_hook)
 
     def forward(self, input, class_idx=None, retain_graph=False):
         return None

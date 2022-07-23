@@ -17,7 +17,7 @@ class ScoreCAM(BaseCAM):
         b, c, h, w = input.size()
         
         # predication on raw input
-        logit = self.model_arch(input).cuda()
+        logit = self.model_arch(input)
         
         if class_idx is None:
             predicted_class = logit.max(1)[-1]
