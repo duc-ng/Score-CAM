@@ -38,6 +38,7 @@ class BaseCAM(object):
               self.activations['value'] = output
             return None
 
+
         
         self.target_layer = find_specific_layer(self.model_arch, self.layer_name)
 

@@ -341,7 +341,7 @@ def visualize(input_, gradients, save_path=None, cmap='viridis', alpha=0.7):
 
 
 def basic_visualize(input_, gradients, save_path=None, weight=None, cmap='viridis', alpha=0.7):
-
+    
     """ Method to plot the explanation.
 
         # Arguments
@@ -685,6 +685,3 @@ def find_specific_layer(arch,target_layer_name):
     layer = reduce(getattr, names, arch)
     print("Target layer: ", layer)
     return layer
-
-
-  
