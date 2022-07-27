@@ -188,6 +188,13 @@ def apply_transforms_v0(image, size=224):
 
     return tensor
 
+def denormalize_score(tensor, means, stds):
+    denormalized = tensor.clone()
+
+    for channel, mean, std in zip(denormalized[0], means, stds):
+        channel.mul_(std).add_(mean)
+
+    return denormalized
 
 def denormalize(tensor):
     """Reverses the normalisation on a tensor.
