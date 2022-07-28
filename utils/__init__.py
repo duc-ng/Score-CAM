@@ -690,5 +690,4 @@ def find_specific_layer(arch,target_layer_name):
     """
     names = target_layer_name.split(sep='.')
     layer = reduce(getattr, names, arch)
-    print("Target layer: ", layer)
     return layer
