@@ -23,9 +23,6 @@ Score-CAM
 ## Run
 Run an example on [Google Colab](https://colab.research.google.com/drive/1Ar32WDBcEG5UUF8qPfSTtFEvfFiw_E2J?usp=sharing)
 
-Results can be found in ./results .
-
-
 ## Credits
 This code is forked from the original [Score-CAM repo](https://github.com/haofanwang/Score-CAM).
 
